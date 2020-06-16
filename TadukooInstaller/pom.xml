@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>TadukooEngineParent</artifactId>
+		<groupId>com.github.tadukoo.engine</groupId>
+		<version>0.1-Alpha-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>TadukooInstaller</artifactId>
+	<packaging>pom</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>TadukooEngine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>TadukooLauncher</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/jars</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>jpackage</executable>
+					<workingDirectory>${project.build.directory}</workingDirectory>
+					<arguments>
+						<!-- use jars folder -->
+						<argument>--input</argument>
+						<argument>jars</argument>
+						<!-- Name = TadukooLauncher -->
+						<argument>--name</argument>
+						<argument>TadukooLauncher</argument>
+						<!-- Description -->
+						<argument>--description</argument>
+						<argument>"Tadukoo Launcher - used to launch applications"</argument>
+						<!-- app version -->
+						<argument>--app-version</argument>
+						<argument>0.0.1</argument>
+						<!-- Copyright -->
+						<argument>--copyright</argument>
+						<argument>Copyright © 2020 Logan Ferree (Tadukoo)</argument>
+						<!-- type -->
+						<argument>--type</argument>
+						<argument>exe</argument>
+						<!-- main jar -->
+						<argument>--main-jar</argument>
+						<argument>TadukooLauncher-0.1-Alpha-SNAPSHOT.jar</argument>
+						<!-- main class -->
+						<argument>--main-class</argument>
+						<argument>com.github.tadukoo.launcher.Launcher</argument>
+						<!-- icon -->
+						<argument>--icon</argument>
+						<argument>"Logo w-o Tagline.ico"</argument>
+						<!-- Allow user to choose directory -->
+						<argument>--win-dir-chooser</argument>
+						<!-- Install to Local App Data -->
+						<argument>--win-per-user-install</argument>
+						<!-- Install to Windows start menu -->
+						<argument>--win-menu</argument>
+						<!-- Create a Windows Desktop shortcut -->
+						<argument>--win-shortcut</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -10,6 +10,7 @@
 	<modules>
 		<module>TadukooEngine</module>
 		<module>TadukooLauncher</module>
+		<module>TadukooInstaller</module>
 	</modules>
 	<properties>
 		<!-- Java Versions -->
@@ -90,6 +91,17 @@
 				<groupId>${tadukoo.util.groupID}</groupId>
 				<artifactId>${tadukoo.util.artifactID}</artifactId>
 				<version>${tadukoo.util.version}</version>
+			</dependency>
+			<!-- Tadukoo Engine/Launcher Modules for Installer -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>TadukooEngine</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>TadukooLauncher</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
