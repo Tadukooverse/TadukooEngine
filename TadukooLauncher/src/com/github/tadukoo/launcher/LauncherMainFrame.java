@@ -36,12 +36,10 @@ public class LauncherMainFrame extends JFrame{
 	private JLabel label;
 	private JComboBox<String> comboBox;
 	private JButton button;
-	private JProgressBar progressBar;
-	private JLabel progressLabel;
 	private JButton updateButton;
 	
 	public LauncherMainFrame(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		URL iconURL = this.getClass().getResource("/img/Logo w-o Tagline.png");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(iconURL));
@@ -63,10 +61,6 @@ public class LauncherMainFrame extends JFrame{
 			}
 		});
 		panel.add(button);
-		
-		progressBar = new JProgressBar(0, 100);
-		progressBar.setStringPainted(true);
-		panel.add(progressBar);
 		
 		updateButton = new JButton("Update");
 		updateButton.addActionListener(new ActionListener(){
@@ -91,22 +85,12 @@ public class LauncherMainFrame extends JFrame{
 	private void launchButton(){
 		String option = (String) comboBox.getSelectedItem();
 		if("TadukooGenealogy.jar".equalsIgnoreCase(option)){
-			//try{
-				new FileDownloader(this, Arrays.asList(
-						Pair.of(genealogyAPIURL, jarFolder + "GenealogyAPI.jar"),
-						Pair.of(genealogyProgramURL, programFolder + "TadukooGenealogy.jar")));
-				//loadFile(genealogyAPIURL, jarFolder + "GenealogyAPI.jar");
-				//loadFile(genealogyProgramURL, programFolder + "TadukooGenealogy.jar");
-			//}catch(IOException ex){
-			//	Launcher.logger.log(Level.SEVERE, "Failed to load/download Tadukoo Genealogy", ex);
-			//}
+			new FileDownloader(this, Arrays.asList(
+					Pair.of(genealogyAPIURL, jarFolder + "GenealogyAPI.jar"),
+					Pair.of(genealogyProgramURL, programFolder + "TadukooGenealogy.jar")));
 			runProgram("TadukooGenealogy.jar", Collections.singletonList("GenealogyAPI.jar"));
 		}else if("TadukooLookAndFeelTest.jar".equalsIgnoreCase(option)){
-			//try{
-				//loadFile("", programFolder + "TadukooLookAndFeelTest.jar");
-			//}catch(IOException ex){
-			//	Launcher.logger.log(Level.SEVERE, "Failed to load/download Tadukoo Look & Feel Test", ex);
-			//}
+			// TODO: File Downloader
 			runProgram("TadukooLookAndFeelTest.jar", Collections.emptyList());
 		}
 	}

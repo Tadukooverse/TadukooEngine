@@ -1,5 +1,7 @@
 package com.github.tadukoo.launcher;
 
+import com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +12,10 @@ import java.util.logging.SimpleFormatter;
 public class Launcher{
 	public static Logger logger;
 	
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, UnsupportedLookAndFeelException{
 		createFolders();
 		createLogger();
+		UIManager.setLookAndFeel(new TadukooLookAndFeel());
 		SwingUtilities.invokeLater(() -> new LauncherMainFrame().setVisible(true));
 	}
 	

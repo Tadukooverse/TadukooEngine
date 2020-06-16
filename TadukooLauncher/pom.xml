@@ -14,6 +14,10 @@
 			<artifactId>TadukooEngine</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${tadukoo.util.groupID}</groupId>
+			<artifactId>${tadukoo.util.lookandfeel.artifactID}</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
