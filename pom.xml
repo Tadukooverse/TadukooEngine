@@ -11,6 +11,7 @@
 		<module>TadukooEngine</module>
 		<module>TadukooLauncher</module>
 		<module>TadukooInstaller</module>
+		<module>TadukooDownloader</module>
 	</modules>
 	<properties>
 		<!-- Java Versions -->
@@ -105,4 +106,18 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>${java.source.version}</source>
+						<target>${java.target.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

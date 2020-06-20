@@ -16,15 +16,5 @@
 	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>${java.source.version}</source>
-					<target>${java.target.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 </project>

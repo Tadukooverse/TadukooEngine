@@ -7,6 +7,7 @@ import com.github.tadukoo.engine.ProgressReadableByteChannelWrapper;
 import com.github.tadukoo.util.tuple.Pair;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,7 @@ public class LauncherMainFrame extends JFrame{
 	private String genealogyProgramURL = "https://github.com/Tadukoo/TadukooGenealogy/releases/download/0.0.0.1-Pre-Alpha/GenealogyProgram-0.1-Alpha-SNAPSHOT.jar";
 	
 	private JPanel panel;
+	private JTabbedPane tabbedPane;
 	private JLabel label;
 	private JComboBox<String> comboBox;
 	private JButton button;
@@ -47,6 +49,7 @@ public class LauncherMainFrame extends JFrame{
 		panel = new JPanel();
 		add(panel);
 		
+		/*
 		label = new JLabel("Choose an app to run");
 		panel.add(label);
 		
@@ -78,18 +81,72 @@ public class LauncherMainFrame extends JFrame{
 			}
 		});
 		panel.add(updateButton);
+		/**/
+		
+		SpringLayout layout = new SpringLayout();
+		panel.setLayout(layout);
+		
+		tabbedPane = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
+		
+		layout.putConstraint(SpringLayout.NORTH, panel,
+							5,
+								SpringLayout.NORTH, tabbedPane);
+		layout.putConstraint(SpringLayout.SOUTH, panel,
+								5,
+									SpringLayout.SOUTH, tabbedPane);
+		layout.putConstraint(SpringLayout.WEST, panel,
+								5,
+									SpringLayout.WEST, tabbedPane);
+		layout.putConstraint(SpringLayout.EAST, panel,
+								5,
+									SpringLayout.EAST, tabbedPane);
+		SpringLayout.Constraints cons = layout.getConstraints(panel);
+		cons.setWidth(Spring.constant(800));
+		cons.setHeight(Spring.constant(600));
+		SpringLayout.Constraints tabCons = layout.getConstraints(tabbedPane);
+		tabCons.setWidth(cons.getWidth());
+		tabCons.setHeight(cons.getHeight());
+		
+		createTabComponents("Tadukoo Genealogy", "It's about genealogy", 0);
+		createTabComponents("Tadukoo Look & Feel Test", "It's a look and feel test", 1);
+		
+		panel.add(tabbedPane);
 		
 		pack();
 	}
 	
-	private void launchButton(){
-		String option = (String) comboBox.getSelectedItem();
-		if("TadukooGenealogy.jar".equalsIgnoreCase(option)){
+	private void createTabComponents(String title, String description, int index){
+		// Make the tab content
+		JPanel tabContentPanel = new JPanel();
+		tabContentPanel.add(new JLabel(title));
+		JTextField descriptionField = new JTextField(description);
+		descriptionField.setEditable(false);
+		tabContentPanel.add(descriptionField);
+		JButton launchButton = new JButton("Launch");
+		launchButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				launchButton(title);
+			}
+		});
+		tabContentPanel.add(launchButton);
+		tabbedPane.addTab(title, tabContentPanel);
+		
+		// Make the tab info
+		JPanel tabPanel = new JPanel();
+		JLabel titleLabel = new JLabel(title);
+		tabPanel.add(titleLabel);
+		tabbedPane.setTabComponentAt(index, tabPanel);
+	}
+	
+	private void launchButton(String option){
+		//String option = (String) comboBox.getSelectedItem();
+		if("Tadukoo Genealogy".equalsIgnoreCase(option)){
 			new FileDownloader(this, Arrays.asList(
 					Pair.of(genealogyAPIURL, jarFolder + "GenealogyAPI.jar"),
 					Pair.of(genealogyProgramURL, programFolder + "TadukooGenealogy.jar")));
 			runProgram("TadukooGenealogy.jar", Collections.singletonList("GenealogyAPI.jar"));
-		}else if("TadukooLookAndFeelTest.jar".equalsIgnoreCase(option)){
+		}else if("Tadukoo Look & Feel Test".equalsIgnoreCase(option)){
 			// TODO: File Downloader
 			runProgram("TadukooLookAndFeelTest.jar", Collections.emptyList());
 		}
