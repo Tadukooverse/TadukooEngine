@@ -19,6 +19,11 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>TadukooLauncher</artifactId>
 		</dependency>
+		<!-- TODO: Temporarily listed here uniquely due to TadukooGenealogy. Eventually to be removed -->
+		<dependency>
+			<groupId>${tadukoo.util.groupID}</groupId>
+			<artifactId>${tadukoo.util.fileformat.artifactID}</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -83,7 +88,7 @@
 						<argument>com.github.tadukoo.launcher.Launcher</argument>
 						<!-- icon -->
 						<argument>--icon</argument>
-						<argument>"Logo w-o Tagline.ico"</argument>
+						<argument>"../Logo w-o Tagline.ico"</argument>
 						<!-- Allow user to choose directory -->
 						<argument>--win-dir-chooser</argument>
 						<!-- Install to Local App Data -->
