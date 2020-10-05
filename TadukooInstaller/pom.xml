@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>TadukooEngineParent</artifactId>
 		<groupId>com.github.tadukoo.engine</groupId>
-		<version>0.1-Alpha-SNAPSHOT</version>
+		<version>0.1.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>TadukooInstaller</artifactId>
@@ -73,7 +73,7 @@
 						<argument>"Tadukoo Launcher - used to launch applications"</argument>
 						<!-- app version -->
 						<argument>--app-version</argument>
-						<argument>0.0.1</argument>
+						<argument>0.0.2</argument>
 						<!-- Copyright -->
 						<argument>--copyright</argument>
 						<argument>Copyright © 2020 Logan Ferree (Tadukoo)</argument>
@@ -82,7 +82,7 @@
 						<argument>exe</argument>
 						<!-- main jar -->
 						<argument>--main-jar</argument>
-						<argument>TadukooLauncher-0.1-Alpha-SNAPSHOT.jar</argument>
+						<argument>TadukooLauncher-${project.version}.jar</argument>
 						<!-- main class -->
 						<argument>--main-class</argument>
 						<argument>com.github.tadukoo.launcher.Launcher</argument>

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.tadukoo.engine</groupId>
 	<artifactId>TadukooEngineParent</artifactId>
-	<version>0.1-Alpha-SNAPSHOT</version>
+	<version>0.1.1-Alpha-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>TadukooEngine</module>
@@ -14,46 +14,59 @@
 		<module>TadukooDownloader</module>
 	</modules>
 	<properties>
-		<!-- Java Versions -->
-		<java.source.version>14</java.source.version>
-		<java.target.version>14</java.target.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
-		<!-- JUnit Versions -->
+		<!-- Java and JUnit Versions -->
+		<java.version>14</java.version>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
+		
+		<!-- Maven Plugin Version -->
+		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<maven.surefire.version>3.0.0-M4</maven.surefire.version>
+		<maven.source.version>3.2.1</maven.source.version>
+		<maven.javadoc.version>3.2.0</maven.javadoc.version>
+		<maven.gpg.version>1.6</maven.gpg.version>
 		
 		<!-- Directories -->
 		<directory.source>src</directory.source>
 		<directory.test>junit</directory.test>
 		<directory.resource>resource</directory.resource>
+		<directory.test-resource>junit-resource</directory.test-resource>
 		<directory.eclipse.annotationprocessing>.apt_generated</directory.eclipse.annotationprocessing>
 		
 		<!-- TadukooUtil Group ID -->
 		<tadukoo.util.groupID>com.github.tadukoo.util</tadukoo.util.groupID>
+		<tadukoo.util.version>0.2-Alpha-SNAPSHOT</tadukoo.util.version>
 		
 		<!-- TadukooLang Info -->
 		<tadukoo.util.lang.artifactID>TadukooLang</tadukoo.util.lang.artifactID>
-		<tadukoo.util.lang.version>0.1-Alpha-SNAPSHOT</tadukoo.util.lang.version>
+		<tadukoo.util.lang.version>${tadukoo.util.version}</tadukoo.util.lang.version>
 		
 		<!-- TadukooAnnotationProcessor Info -->
 		<tadukoo.util.annotationprocessor.artifactID>TadukooAnnotationProcessor</tadukoo.util.annotationprocessor.artifactID>
-		<tadukoo.util.annotationprocessor.version>${tadukoo.util.lang.version}</tadukoo.util.annotationprocessor.version>
+		<tadukoo.util.annotationprocessor.version>${tadukoo.util.version}</tadukoo.util.annotationprocessor.version>
 		
 		<!-- TadukooDatabase Info -->
 		<tadukoo.util.database.artifactID>TadukooDatabase</tadukoo.util.database.artifactID>
-		<tadukoo.util.database.version>${tadukoo.util.lang.version}</tadukoo.util.database.version>
+		<tadukoo.util.database.version>${tadukoo.util.version}</tadukoo.util.database.version>
 		
 		<!-- TadukooFileFormat Info -->
 		<tadukoo.util.fileformat.artifactID>TadukooFileFormat</tadukoo.util.fileformat.artifactID>
-		<tadukoo.util.fileformat.version>${tadukoo.util.lang.version}</tadukoo.util.fileformat.version>
+		<tadukoo.util.fileformat.version>${tadukoo.util.version}</tadukoo.util.fileformat.version>
 		
 		<!-- TadukooLookAndFeel Info -->
 		<tadukoo.util.lookandfeel.artifactID>TadukooLookAndFeel</tadukoo.util.lookandfeel.artifactID>
-		<tadukoo.util.lookandfeel.version>${tadukoo.util.lang.version}</tadukoo.util.lookandfeel.version>
+		<tadukoo.util.lookandfeel.version>${tadukoo.util.version}</tadukoo.util.lookandfeel.version>
 		
 		<!-- TadukooUtil Info -->
-		<tadukoo.util.artifactID>TadukooUtil</tadukoo.util.artifactID>
-		<tadukoo.util.version>${tadukoo.util.lang.version}</tadukoo.util.version>
+		<tadukoo.util.util.artifactID>TadukooUtil</tadukoo.util.util.artifactID>
+		<tadukoo.util.util.version>${tadukoo.util.version}</tadukoo.util.util.version>
+		
+		<!-- TadukooView Info -->
+		<tadukoo.util.view.artifactID>TadukooView</tadukoo.util.view.artifactID>
+		<tadukoo.util.view.version>${tadukoo.util.version}</tadukoo.util.view.version>
+		
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -69,6 +82,12 @@
 				<artifactId>${tadukoo.util.annotationprocessor.artifactID}</artifactId>
 				<version>${tadukoo.util.annotationprocessor.version}</version>
 			</dependency>
+			<!-- TadukooUtil Dependency -->
+			<dependency>
+				<groupId>${tadukoo.util.groupID}</groupId>
+				<artifactId>${tadukoo.util.util.artifactID}</artifactId>
+				<version>${tadukoo.util.util.version}</version>
+			</dependency>
 			<!-- TadukooDatabase Dependency -->
 			<dependency>
 				<groupId>${tadukoo.util.groupID}</groupId>
@@ -81,17 +100,17 @@
 				<artifactId>${tadukoo.util.fileformat.artifactID}</artifactId>
 				<version>${tadukoo.util.fileformat.version}</version>
 			</dependency>
+			<!-- TadukooView Dependency -->
+			<dependency>
+				<groupId>${tadukoo.util.groupID}</groupId>
+				<artifactId>${tadukoo.util.view.artifactID}</artifactId>
+				<version>${tadukoo.util.view.version}</version>
+			</dependency>
 			<!-- TadukooLookAndFeel Dependency -->
 			<dependency>
 				<groupId>${tadukoo.util.groupID}</groupId>
 				<artifactId>${tadukoo.util.lookandfeel.artifactID}</artifactId>
 				<version>${tadukoo.util.lookandfeel.version}</version>
-			</dependency>
-			<!-- TadukooUtil Dependency -->
-			<dependency>
-				<groupId>${tadukoo.util.groupID}</groupId>
-				<artifactId>${tadukoo.util.artifactID}</artifactId>
-				<version>${tadukoo.util.version}</version>
 			</dependency>
 			<!-- Tadukoo Engine/Launcher Modules for Installer -->
 			<dependency>
@@ -111,11 +130,85 @@
 			<plugins>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.0</version>
+					<version>${maven.compiler.version}</version>
 					<configuration>
-						<source>${java.source.version}</source>
-						<target>${java.target.version}</target>
+						<release>${java.version}</release>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.5</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>1.6.8</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org</nexusUrl>
+						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.version}</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.version}</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven.gpg.version}</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>

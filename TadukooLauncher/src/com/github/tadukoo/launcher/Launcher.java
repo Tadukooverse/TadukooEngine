@@ -1,49 +1,55 @@
 package com.github.tadukoo.launcher;
 
+import com.github.tadukoo.util.FileUtil;
+import com.github.tadukoo.util.ListUtil;
+import com.github.tadukoo.util.LoggerUtil;
+import com.github.tadukoo.util.logger.EasyLogger;
 import com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel;
 
 import javax.swing.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.logging.FileHandler;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 public class Launcher{
-	public static Logger logger;
+	public static final String FONTS_FOLDER = "fonts/";
+	private static final String LOGS_FOLDER = "logs/";
+	public static final String LIBS_FOLDER = "libs/";
+	public static final String PROGRAMS_FOLDER = "programs/";
+	private static final List<String> folders = ListUtil.createList(FONTS_FOLDER, LOGS_FOLDER,
+			LIBS_FOLDER, PROGRAMS_FOLDER);
+	public static EasyLogger logger;
 	
+	/**
+	 * Starts the Tadukoo Launcher
+	 *
+	 * @param args Not used
+	 * @throws IOException If something goes wrong in creating the file logger
+	 * @throws UnsupportedLookAndFeelException Never ({@link TadukooLookAndFeel#isSupportedLookAndFeel()} always
+	 * returns true)
+	 */
 	public static void main(String[] args) throws IOException, UnsupportedLookAndFeelException{
-		createFolders();
-		createLogger();
-		UIManager.setLookAndFeel(new TadukooLookAndFeel());
-		SwingUtilities.invokeLater(() -> new LauncherMainFrame().setVisible(true));
-	}
-	
-	private static void createFolders(){
-		File programsDir = new File("programs");
-		if(!programsDir.mkdir() && !programsDir.exists()){
-			throw new IllegalStateException("Failed to create programs folder!");
+		// Set the logging format
+		System.setProperty("java.util.logging.SimpleFormatter.format",
+				"[%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS] [%4$s] [%2$s] %5$s%6$s%n");
+		
+		// Create Logger
+		String dateString = new SimpleDateFormat("yyyy-MM-dd").format(new Date(System.currentTimeMillis()));
+		logger = new EasyLogger(
+				LoggerUtil.createFileLogger(LOGS_FOLDER + "launcher-" + dateString + ".log", Level.INFO));
+		
+		// Create Folders (in case they don't exist yet)
+		for(String folder: folders){
+			FileUtil.createDirectory(folder);
 		}
 		
-		File libDir = new File("libs");
-		if(!libDir.mkdir() && !libDir.exists()){
-			throw new IllegalStateException("Failed to create libs folder!");
-		}
-	}
-	
-	private static void createLogger() throws IOException{
-		logger = Logger.getLogger("LauncherLog");
-		String logDirPath = "logs";
-		File logDir = new File(logDirPath);
-		if(!logDir.mkdir() && !logDir.exists()){
-			throw new IllegalStateException("Failed to create logs folder!");
-		}
-		String logFilePath = "logs/launcher.log";
-		File logFile = new File(logFilePath);
-		logFile.createNewFile();
-		FileHandler fh = new FileHandler(logFilePath);
-		logger.addHandler(fh);
-		SimpleFormatter formatter = new SimpleFormatter();
-		fh.setFormatter(formatter);
+		// Set the Look & Feel
+		UIManager.setLookAndFeel(new TadukooLookAndFeel());
+		
+		// Start the Main Frame
+		SwingUtilities.invokeLater(() -> new LauncherMainFrame().setVisible(true));
 	}
 }
