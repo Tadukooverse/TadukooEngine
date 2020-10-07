@@ -2,34 +2,25 @@ package com.github.tadukoo.launcher;
 
 import com.github.tadukoo.engine.FileDownloader;
 import com.github.tadukoo.engine.Program;
-import com.github.tadukoo.engine.ProgressRBCWrapperDelegate;
-import com.github.tadukoo.engine.ProgressReadableByteChannelWrapper;
 import com.github.tadukoo.util.FileUtil;
 import com.github.tadukoo.util.ListUtil;
-import com.github.tadukoo.util.logger.EasyLogger;
 import com.github.tadukoo.util.tuple.Pair;
 import com.github.tadukoo.util.view.font.FontResourceLoader;
-import com.github.tadukoo.util.view.font.Fonts;
+import com.github.tadukoo.util.view.font.FontFamilies;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
 
 public class LauncherMainFrame extends JFrame{
 	private String genealogyAPIURL = "https://github.com/Tadukoo/TadukooGenealogy/releases/download/0.0.0.1-Pre-Alpha/GenealogyAPI-0.1-Alpha-SNAPSHOT.jar";
@@ -95,14 +86,14 @@ public class LauncherMainFrame extends JFrame{
 						Pair.of(fontZipURL, Launcher.FONTS_FOLDER + "fonts.zip")));
 				try{
 					FileUtil.unzipFile(Launcher.FONTS_FOLDER + "fonts.zip", Launcher.FONTS_FOLDER);
-					FontResourceLoader resourceLoader = new FontResourceLoader(Launcher.logger,
+					FontResourceLoader resourceLoader = new FontResourceLoader(true, Launcher.logger,
 							GraphicsEnvironment.getLocalGraphicsEnvironment(), Launcher.FONTS_FOLDER);
-					List<String> fonts = resourceLoader.loadFonts(ListUtil.createList(Fonts.ARIMO.getFamily(), Fonts.BANGERS.getFamily(),
-							Fonts.CALADEA.getFamily(), Fonts.CALLIGRASERIF.getFamily(), Fonts.CARLITO.getFamily(),
-							Fonts.COMIC_RELIEF.getFamily(), Fonts.COUSINE.getFamily(), Fonts.GELASIO.getFamily(),
-							Fonts.LECKERLI_ONE.getFamily(), Fonts.LOBSTER.getFamily(), Fonts.ROBOTO.getFamily(),
-							Fonts.ROBOTO_CONDENSED.getFamily(), Fonts.SATISFY.getFamily(), Fonts.SELAWIK.getFamily(),
-							Fonts.SOURCE_CODE_PRO.getFamily(), Fonts.TINOS.getFamily(), Fonts.WINE_TAHOMA.getFamily()),
+					List<String> fonts = resourceLoader.loadFonts(ListUtil.createList(FontFamilies.ARIMO.getFamily(), FontFamilies.BANGERS.getFamily(),
+							FontFamilies.CALADEA.getFamily(), FontFamilies.CALLIGRASERIF.getFamily(), FontFamilies.CARLITO.getFamily(),
+							FontFamilies.COMIC_RELIEF.getFamily(), FontFamilies.COUSINE.getFamily(), FontFamilies.GELASIO.getFamily(),
+							FontFamilies.LECKERLI_ONE.getFamily(), FontFamilies.LOBSTER.getFamily(), FontFamilies.ROBOTO.getFamily(),
+							FontFamilies.ROBOTO_CONDENSED.getFamily(), FontFamilies.SATISFY.getFamily(), FontFamilies.SELAWIK.getFamily(),
+							FontFamilies.SOURCE_CODE_PRO.getFamily(), FontFamilies.TINOS.getFamily(), FontFamilies.WINE_TAHOMA.getFamily()),
 							true);
 					Launcher.logger.logInfo("Loaded " + fonts.size() + " fonts");
 					for(String font: fonts){

@@ -7,6 +7,7 @@ import com.github.tadukoo.util.logger.EasyLogger;
 import com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,11 +28,12 @@ public class Launcher{
 	 * Starts the Tadukoo Launcher
 	 *
 	 * @param args Not used
-	 * @throws IOException If something goes wrong in creating the file logger
+	 * @throws IOException If something goes wrong in creating the file logger or loading fonts in the Look & Feel
 	 * @throws UnsupportedLookAndFeelException Never ({@link TadukooLookAndFeel#isSupportedLookAndFeel()} always
 	 * returns true)
+	 * @throws FontFormatException If something goes wrong in loading fonts in the Look & Feel
 	 */
-	public static void main(String[] args) throws IOException, UnsupportedLookAndFeelException{
+	public static void main(String[] args) throws IOException, UnsupportedLookAndFeelException, FontFormatException{
 		// Set the logging format
 		System.setProperty("java.util.logging.SimpleFormatter.format",
 				"[%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS] [%4$s] [%2$s] %5$s%6$s%n");
@@ -45,6 +47,10 @@ public class Launcher{
 		for(String folder: folders){
 			FileUtil.createDirectory(folder);
 		}
+		
+		// TODO: Check for launcher updates and update it
+		
+		// TODO: Check for font updates and update them
 		
 		// Set the Look & Feel
 		UIManager.setLookAndFeel(new TadukooLookAndFeel());
