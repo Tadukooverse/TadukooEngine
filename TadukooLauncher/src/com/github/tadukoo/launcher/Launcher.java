@@ -28,10 +28,10 @@ public class Launcher{
 	 * Starts the Tadukoo Launcher
 	 *
 	 * @param args Not used
-	 * @throws IOException If something goes wrong in creating the file logger or loading fonts in the Look & Feel
+	 * @throws IOException If something goes wrong in creating the file logger or loading fonts in the Look &amp; Feel
 	 * @throws UnsupportedLookAndFeelException Never ({@link TadukooLookAndFeel#isSupportedLookAndFeel()} always
 	 * returns true)
-	 * @throws FontFormatException If something goes wrong in loading fonts in the Look & Feel
+	 * @throws FontFormatException If something goes wrong in loading fonts in the Look &amp; Feel
 	 */
 	public static void main(String[] args) throws IOException, UnsupportedLookAndFeelException, FontFormatException{
 		// Set the logging format
