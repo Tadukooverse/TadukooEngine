@@ -11,7 +11,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${tadukoo.util.groupID}</groupId>
-			<artifactId>${tadukoo.util.lang.artifactID}</artifactId>
+			<artifactId>${tadukoo.util.util.artifactID}</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

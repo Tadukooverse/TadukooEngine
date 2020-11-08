@@ -4,6 +4,7 @@ import com.github.tadukoo.util.ExceptionUtil;
 import com.github.tadukoo.util.tuple.Pair;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,7 +21,7 @@ public class FileDownloader extends JPanel implements ProgressRBCWrapperDelegate
 	private JProgressBar overallProgressBar;
 	private JProgressBar singleProgressBar;
 	
-	public FileDownloader(JFrame frame, Collection<Pair<String, String>> fileAddressAndPathPairs){
+	public FileDownloader(Component frame, Collection<Pair<String, String>> fileAddressAndPathPairs){
 		JPanel panel = new JPanel();
 		
 		JButton button = new JButton("Start");

@@ -1,8 +1,10 @@
 package com.github.tadukoo.engine;
 
+import com.github.tadukoo.util.logger.EasyLogger;
+
 public interface Program{
 	
-	public boolean load();
+	boolean load(EasyLogger logger);
 	
-	public void run();
+	void run();
 }

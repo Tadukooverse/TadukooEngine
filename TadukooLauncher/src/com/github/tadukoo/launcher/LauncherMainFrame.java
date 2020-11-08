@@ -1,26 +1,24 @@
 package com.github.tadukoo.launcher;
 
 import com.github.tadukoo.engine.FileDownloader;
-import com.github.tadukoo.engine.Program;
 import com.github.tadukoo.util.FileUtil;
 import com.github.tadukoo.util.ListUtil;
+import com.github.tadukoo.util.view.components.TadukooButton;
 import com.github.tadukoo.util.tuple.Pair;
 import com.github.tadukoo.util.view.font.FontResourceLoader;
 import com.github.tadukoo.util.view.font.FontFamilies;
+import com.github.tadukoo.util.view.form.AbstractForm;
+import com.github.tadukoo.util.view.form.field.ButtonFormField;
+import com.github.tadukoo.util.view.form.field.StringFormField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.jar.JarFile;
 
 public class LauncherMainFrame extends JFrame{
 	private String genealogyAPIURL = "https://github.com/Tadukoo/TadukooGenealogy/releases/download/0.0.0.1-Pre-Alpha/GenealogyAPI-0.1-Alpha-SNAPSHOT.jar";
@@ -43,6 +41,24 @@ public class LauncherMainFrame extends JFrame{
 		
 		panel = new JPanel();
 		add(panel);
+		
+		/*
+		AbstractForm newForm = new AbstractForm(new HashMap<>()){
+			
+			@Override
+			public boolean labelsOnTop(){
+				return false;
+			}
+			
+			@Override
+			public void setDefaultFields(){
+				addField(StringFormField.builder().key("Test").defaultValue("Some Value").rowPos(1).colPos(0).rowSpan(1).colSpan(1).build());
+				//addField(FormField.tableFieldBuilder().key("Test Map").rowPos(0).colPos(0).rowSpan(1).colSpan(1).build());
+				addField(ButtonFormField.builder().key("Submit").rowPos(2).colPos(0).rowSpan(1).colSpan(1).build());
+			}
+		};
+		panel.add(newForm);
+		/**/
 		
 		/*
 		label = new JLabel("Choose an app to run");
@@ -78,7 +94,10 @@ public class LauncherMainFrame extends JFrame{
 		panel.add(updateButton);
 		/**/
 		
-		updateButton = new JButton("Update");
+		updateButton = TadukooButton.builder()
+				.text("Update")
+				//.shapeFunc(Shapes.RECTANGLE_WITH_CUT_CORNERS_TR_BL.getShapeFunc())
+				.build();
 		updateButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -133,6 +152,7 @@ public class LauncherMainFrame extends JFrame{
 		createTabComponents("Tadukoo Genealogy", "It's about genealogy", 0);
 		createTabComponents("Tadukoo Look & Feel Test", "It's a look and feel test", 1);
 		createTabComponents("Stratego", "Play Stratego", 2);
+		createTabComponents("Tadukoo Pojo Maker", "Make Pojos", 3);
 		
 		panel.add(tabbedPane);
 		
@@ -140,6 +160,21 @@ public class LauncherMainFrame extends JFrame{
 	}
 	
 	private void createTabComponents(String title, String description, int index){
+		ProgramInfo programInfo = new ProgramInfo(title, description);
+		tabbedPane.addTab(title, programInfo);
+		
+		/*
+		AbstractForm form = new AbstractForm(){
+			@Override
+			public void setDefaultFields(){
+				addField(FormField.stringFieldBuilder().key("Title").defaultValue(title).rowPos(0).colPos(0).isTitle(true).includeLabel(false).build());
+				addField(FormField.stringFieldBuilder().key("Description").defaultValue(description).rowPos(1).colPos(0).includeLabel(false).build());
+				addField(FormField.buttonFieldBuilder().key("Launch").rowPos(2).colPos(0).actionListener(e -> launchButton(title)).build());
+			}
+		};
+		tabbedPane.addTab(title, form);
+		/*
+		
 		// Make the tab content
 		JPanel tabContentPanel = new JPanel();
 		tabContentPanel.add(new JLabel(title));
@@ -150,6 +185,7 @@ public class LauncherMainFrame extends JFrame{
 		launchButton.addActionListener(e -> launchButton(title));
 		tabContentPanel.add(launchButton);
 		tabbedPane.addTab(title, tabContentPanel);
+		/**/
 		
 		// Make the tab info
 		JPanel tabPanel = new JPanel();
@@ -158,6 +194,7 @@ public class LauncherMainFrame extends JFrame{
 		tabbedPane.setTabComponentAt(index, tabPanel);
 	}
 	
+	/*
 	private void launchButton(String option){
 		//String option = (String) comboBox.getSelectedItem();
 		if("Tadukoo Genealogy".equalsIgnoreCase(option)){
@@ -242,4 +279,5 @@ public class LauncherMainFrame extends JFrame{
 			JOptionPane.showMessageDialog(this, sw.toString());
 		}
 	}
+	/**/
 }
