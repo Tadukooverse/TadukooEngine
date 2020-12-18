@@ -4,8 +4,10 @@ import com.github.tadukoo.engine.FileDownloader;
 import com.github.tadukoo.engine.Program;
 import com.github.tadukoo.util.map.MapUtil;
 import com.github.tadukoo.util.tuple.Pair;
-import com.github.tadukoo.util.view.form.AbstractForm;
-import com.github.tadukoo.util.view.form.field.*;
+import com.github.tadukoo.view.form.AbstractForm;
+import com.github.tadukoo.view.form.field.ButtonFormField;
+import com.github.tadukoo.view.form.field.LabelType;
+import com.github.tadukoo.view.form.field.StringFormField;
 
 import javax.swing.*;
 import java.io.File;
@@ -73,7 +75,7 @@ public class ProgramInfo extends AbstractForm{
 			// TODO: File Downloader
 			runProgram("Stratego.jar", Collections.emptyList());
 		}else if("Tadukoo Pojo Maker".equalsIgnoreCase(option)){
-			runProgram("TadukooPojoMaker.jar", Collections.emptyList());
+			runProgram("TadukooPojoMaker.jar", Collections.singletonList("TadukooJava.jar"));
 		}
 	}
 	
@@ -134,8 +136,11 @@ public class ProgramInfo extends AbstractForm{
 		try{
 			Program plugin = (Program) programClass.getDeclaredConstructor().newInstance();
 			if(plugin.load(Launcher.logger)){
-				Launcher.logger.logInfo("Loaded program " + plugin.getClass().getCanonicalName() + " successfully");
+				Launcher.logger.logInfo("Loaded program " + plugin.getTitle() + " successfully");
 				plugin.run();
+			}else{
+				Launcher.logger.logError("Failed to load program " + plugin.getTitle() +
+						" - received result of false on load");
 			}
 		}catch(InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e){
 			Launcher.logger.logError("Failed to load " + programClass.getCanonicalName() + " program", e);

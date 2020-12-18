@@ -3,13 +3,10 @@ package com.github.tadukoo.launcher;
 import com.github.tadukoo.engine.FileDownloader;
 import com.github.tadukoo.util.FileUtil;
 import com.github.tadukoo.util.ListUtil;
-import com.github.tadukoo.util.view.components.TadukooButton;
+import com.github.tadukoo.view.components.TadukooButton;
 import com.github.tadukoo.util.tuple.Pair;
-import com.github.tadukoo.util.view.font.FontResourceLoader;
-import com.github.tadukoo.util.view.font.FontFamilies;
-import com.github.tadukoo.util.view.form.AbstractForm;
-import com.github.tadukoo.util.view.form.field.ButtonFormField;
-import com.github.tadukoo.util.view.form.field.StringFormField;
+import com.github.tadukoo.view.font.FontResourceLoader;
+import com.github.tadukoo.view.font.FontFamilies;
 
 import javax.swing.*;
 import java.awt.*;

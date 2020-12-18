@@ -4,7 +4,7 @@ import com.github.tadukoo.util.FileUtil;
 import com.github.tadukoo.util.ListUtil;
 import com.github.tadukoo.util.LoggerUtil;
 import com.github.tadukoo.util.logger.EasyLogger;
-import com.github.tadukoo.util.lookandfeel.TadukooLookAndFeel;
+import com.github.tadukoo.view.lookandfeel.TadukooLookAndFeel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Launcher{
 	public static final String FONTS_FOLDER = "fonts/";
