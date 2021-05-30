@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * progress as it goes) and then runs that installer and exits this process.
  *
  * @author Logan Ferree (Tadukoo)
- * @version 0.1-Alpha-SNAPSHOT
+ * @version Alpha v.0.1
  */
 public class LauncherDownloader{
 	/**
@@ -29,53 +29,68 @@ public class LauncherDownloader{
 	 * to actually handle the JSON, as I'm trying to produce a smaller jar
 	 */
 	private static final Pattern githubPattern = Pattern.compile(
-			"(?:[\\s\\S]*)\"assets\":" +
-			"\\s*\\[(?:[\\s\\S]*)\\{\\s*" +
-			"\"url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"id\":\\s*(?:\\d*),\\s*" +
-			"\"node_id\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"name\":\\s*\"TadukooLauncher-(?:[^\"]*).exe\",\\s*" +
-			"\"label\":\\s*(?:[^{}]*),\\s*" +
+			"[\\s\\S]*\"assets\":" +
+			"\\s*\\[[\\s\\S]*\\{\\s*" +
+			"\"url\":\\s*\"[^\"]*\",\\s*" +
+			"\"id\":\\s*\\d*,\\s*" +
+			"\"node_id\":\\s*\"[^\"]*\",\\s*" +
+			"\"name\":\\s*\"TadukooLauncher-[^\"]*.exe\",\\s*" +
+			"\"label\":\\s*[^{}]*,\\s*" +
 			"\"uploader\":\\s*\\{\\s*" +
-			"\"login\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"id\":\\s*(?:\\d*),\\s*" +
-			"\"node_id\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"avatar_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"gravatar_id\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"html_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"followers_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"following_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"gists_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"starred_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"subscriptions_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"organizations_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"repos_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"events_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"received_events_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"type\":\\s*\"(?:[^\"]*)\",\\s*" +
+			"\"login\":\\s*\"[^\"]*\",\\s*" +
+			"\"id\":\\s*\\d*,\\s*" +
+			"\"node_id\":\\s*\"[^\"]*\",\\s*" +
+			"\"avatar_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"gravatar_id\":\\s*\"[^\"]*\",\\s*" +
+			"\"url\":\\s*\"[^\"]*\",\\s*" +
+			"\"html_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"followers_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"following_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"gists_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"starred_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"subscriptions_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"organizations_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"repos_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"events_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"received_events_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"type\":\\s*\"[^\"]*\",\\s*" +
 			"\"site_admin\":\\s*(?:true|false)\\s*},\\s*" +
-			"\"content_type\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"state\":\\s*\"(?:[^\"]*)\",\\s*" +
+			"\"content_type\":\\s*\"[^\"]*\",\\s*" +
+			"\"state\":\\s*\"[^\"]*\",\\s*" +
 			"\"size\":\\s*(\\d*),\\s*" +
-			"\"download_count\":\\s*(?:\\d*),\\s*" +
-			"\"created_at\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"updated_at\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"browser_download_url\":\\s*\"([^\"]*)\"\\s*}(?:[\\s\\S]*)\\s*],\\s*" +
-			"\"tarball_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"zipball_url\":\\s*\"(?:[^\"]*)\",\\s*" +
-			"\"body\":\\s*\"(?:[\\s\\S]*)\"\\s*}");
+			"\"download_count\":\\s*\\d*,\\s*" +
+			"\"created_at\":\\s*\"[^\"]*\",\\s*" +
+			"\"updated_at\":\\s*\"[^\"]*\",\\s*" +
+			"\"browser_download_url\":\\s*\"([^\"]*)\"\\s*}[\\s\\S]*\\s*],\\s*" +
+			"\"tarball_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"zipball_url\":\\s*\"[^\"]*\",\\s*" +
+			"\"body\":\\s*\"[\\s\\S]*\"\\s*}");
 	
+	/** The amount of bytes in a kilobyte */
 	private static final long bytesInKB = 1024;
+	/** The amount of bytes in a megabyte */
 	private static final long bytesInMB = bytesInKB * 1024;
+	/** The amount of bytes in a gigabyte */
 	private static final long bytesInGB = bytesInMB * 1024;
 	
+	/** The progress bar to show progress to the user */
 	private static JProgressBar progressBar;
+	/** The URL for the file to be downloaded */
 	private static URL fileURL;
+	/** The size of the file to be downloaded */
 	private static long fileSize;
+	/** The name of the installer file */
 	private static final String fileName = "TadukooLauncherInstall.exe";
 	
+	/**
+	 * Sets up the frame to show the user, retrieves the necessary download info from GitHub, downloads the
+	 * installer, tells it to run, and then exits.
+	 *
+	 * @param args Not used
+	 * @throws IOException If something goes wrong in retrieving info from GitHub
+	 */
 	public static void main(String[] args) throws IOException{
+		System.out.println(githubPattern.pattern());
 		setupFrame();
 		retrieveInfoFromGitHub();
 		downloadFile();
@@ -84,6 +99,9 @@ public class LauncherDownloader{
 		System.exit(0);
 	}
 	
+	/**
+	 * Creates a window with the progress bar and some info about what we're downloading
+	 */
 	private static void setupFrame(){
 		// Setup the frame
 		JFrame frame = new JFrame();
@@ -171,6 +189,14 @@ public class LauncherDownloader{
 		}
 	}
 	
+	/**
+	 * Updates the progress in the progress bar using the current progress and how much has been
+	 * downloaded so far
+	 *
+	 * @param progress The current progress out of 100
+	 * @param readSoFar How many bytes have been read so far
+	 * @param expectedSize How many total bytes there are to read
+	 */
 	public static void progressUpdate(double progress, long readSoFar, long expectedSize){
 		if(progress > 100.0){
 			progress = 100.0;
