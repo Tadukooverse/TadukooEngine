@@ -5,21 +5,14 @@
 	<parent>
 		<groupId>com.github.tadukoo.engine</groupId>
 		<artifactId>TadukooEngineParent</artifactId>
-		<version>0.1.1-Alpha-SNAPSHOT</version>
+		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<artifactId>TadukooLauncher</artifactId>
 	<dependencies>
+		<!-- Tadukoo Engine -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>TadukooEngine</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${tadukoo.view.groupID}</groupId>
-			<artifactId>${tadukoo.view.lookandfeel.artifactID}</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${tadukoo.view.groupID}</groupId>
-			<artifactId>${tadukoo.view.form.artifactID}</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

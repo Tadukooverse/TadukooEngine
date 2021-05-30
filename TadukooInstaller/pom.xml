@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>TadukooEngineParent</artifactId>
 		<groupId>com.github.tadukoo.engine</groupId>
-		<version>0.1.1-Alpha-SNAPSHOT</version>
+		<version>0.1-Alpha-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>TadukooInstaller</artifactId>
@@ -71,7 +71,7 @@
 						<argument>0.0.3</argument>
 						<!-- Copyright -->
 						<argument>--copyright</argument>
-						<argument>Copyright © 2020 Logan Ferree (Tadukoo)</argument>
+						<argument>Copyright © 2020-2021 Logan Ferree (Tadukoo)</argument>
 						<!-- type -->
 						<argument>--type</argument>
 						<argument>exe</argument>
