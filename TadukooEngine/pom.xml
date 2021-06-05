@@ -24,8 +24,18 @@
 			<groupId>${tadukoo.github.groupID}</groupId>
 			<artifactId>${tadukoo.github.github.artifactID}</artifactId>
 		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>${junit.jupiter.groupID}</groupId>
+			<artifactId>${junit.jupiter.artifactID}</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${junit.platform.groupID}</groupId>
+			<artifactId>${junit.platform.artifactID}</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>
+		<testSourceDirectory>${directory.test}</testSourceDirectory>
 	</build>
 </project>
