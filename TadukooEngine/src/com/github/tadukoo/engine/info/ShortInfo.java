@@ -2,6 +2,7 @@ package com.github.tadukoo.engine.info;
 
 import com.github.tadukoo.parsing.json.AbstractOrderedJSONClass;
 import com.github.tadukoo.util.ListUtil;
+import com.github.tadukoo.util.StringUtil;
 import com.github.tadukoo.util.pojo.MappedPojo;
 
 import java.util.List;
@@ -77,5 +78,17 @@ public class ShortInfo extends AbstractOrderedJSONClass{
 	 */
 	public String getInfoLocation(){
 		return (String) getItem(INFO_LOCATION);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object obj){
+		if(obj instanceof ShortInfo info){
+			return info.getType().equals(getType()) && StringUtil.equals(info.getTitle(), getTitle()) &&
+					StringUtil.equals(info.getInfoName(), getInfoName()) &&
+					StringUtil.equals(info.getInfoLocation(), getInfoLocation());
+		}else{
+			return false;
+		}
 	}
 }
