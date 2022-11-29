@@ -160,6 +160,7 @@ public class ProgramInfoTest{
 	
 	@Test
 	public void testBuilderSetEverything() throws Throwable{
+		JUnitEasyLogger logger = new JUnitEasyLogger();
 		ProgramHandler progHand = programInfo -> {
 			// Do nothing
 		};
@@ -170,12 +171,14 @@ public class ProgramInfoTest{
 		String infoName2 = "test2.jar";
 		String infoLocation2 = "nowhere2";
 		programInfo = ProgramInfo.builder()
+				.logger(logger)
 				.title(title).description(description)
 				.programJarName("testJarName.jar")
 				.library(libTitle1, infoName1, infoLocation1)
 				.library(new ShortInfo(InfoType.LIB, libTitle2, infoName2, infoLocation2))
 				.programHandler(progHand)
 				.build();
+		assertEquals(logger, programInfo.getLogger());
 		assertEquals(title, programInfo.getTitle());
 		assertEquals(description, programInfo.getDescription());
 		assertEquals("testJarName.jar", programInfo.getProgramJarName());
@@ -239,6 +242,7 @@ public class ProgramInfoTest{
 	
 	@Test
 	public void testMappedPojoConstructor() throws Throwable{
+		JUnitEasyLogger logger = new JUnitEasyLogger();
 		ProgramHandler progHand = programInfo -> {
 			// Do nothing
 		};
@@ -249,6 +253,7 @@ public class ProgramInfoTest{
 		String infoName2 = "test2.jar";
 		String infoLocation2 = "nowhere2";
 		MappedPojo pojo = ProgramInfo.builder()
+				.logger(logger)
 				.title(title).description(description)
 				.programJarName("testJarName.jar")
 				.library(libTitle1, infoName1, infoLocation1)
@@ -256,6 +261,7 @@ public class ProgramInfoTest{
 				.programHandler(progHand)
 				.build();
 		programInfo = new ProgramInfo(pojo);
+		assertEquals(logger, programInfo.getLogger());
 		assertEquals(title, programInfo.getTitle());
 		assertEquals(description, programInfo.getDescription());
 		assertEquals("testJarName.jar", programInfo.getProgramJarName());
