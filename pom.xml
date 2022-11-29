@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.github.tadukoo.maven</groupId>
 		<artifactId>TadukooMavenViewPOM</artifactId>
-		<version>0.2-Alpha</version>
+		<version>0.4-Alpha-SNAPSHOT</version>
 	</parent>
 	<groupId>com.github.tadukoo.engine</groupId>
 	<artifactId>TadukooEngineParent</artifactId>
@@ -23,10 +23,11 @@
 	<properties>
 		<!-- Info -->
 		<shortName>TadukooEngine</shortName>
-		<tadukoo.view.version>0.3.3-Alpha-SNAPSHOT</tadukoo.view.version>
+		<tadukoo.util.version>0.6-Beta-SNAPSHOT</tadukoo.util.version>
+		<tadukoo.view.version>0.4-Alpha-SNAPSHOT</tadukoo.view.version>
 		
 		<!-- Tadukoo GitHub Versions -->
-		<tadukoo.github.version>0.1.2-Alpha-SNAPSHOT</tadukoo.github.version>
+		<tadukoo.github.version>0.1.4-Alpha-SNAPSHOT</tadukoo.github.version>
 		<tadukoo.github.github.version>${tadukoo.github.version}</tadukoo.github.github.version>
 		
 		<!-- Tadukoo GitHub Info -->

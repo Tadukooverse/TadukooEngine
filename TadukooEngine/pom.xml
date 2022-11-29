@@ -33,6 +33,11 @@
 			<groupId>${junit.platform.groupID}</groupId>
 			<artifactId>${junit.platform.artifactID}</artifactId>
 		</dependency>
+		<!-- Tadukoo JUnit -->
+		<dependency>
+			<groupId>${tadukoo.util.groupID}</groupId>
+			<artifactId>${tadukoo.util.junit.artifactID}</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>${directory.source}</sourceDirectory>

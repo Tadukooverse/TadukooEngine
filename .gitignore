@@ -7,3 +7,9 @@
 *.iml
 target/
 pom.xml.versionsBackup
+config/
+fonts/
+info/
+libs/
+logs/
+programs/

@@ -7,6 +7,7 @@ import com.github.tadukoo.parsing.json.JSONClass;
 import com.github.tadukoo.parsing.json.OrderedJSONClass;
 import com.github.tadukoo.util.ListUtil;
 import com.github.tadukoo.util.StringUtil;
+import com.github.tadukoo.util.logger.EasyLogger;
 import com.github.tadukoo.util.map.MapUtil;
 import com.github.tadukoo.util.pojo.MappedPojo;
 import com.github.tadukoo.util.tuple.Pair;
@@ -42,6 +43,11 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	 *         <th>Default or Required</th>
 	 *     </tr>
 	 *     <tr>
+	 *         <td>logger</td>
+	 *         <td>An {@link EasyLogger} to use for logging if needed</td>
+	 *         <td>Defaults to {@code null}</td>
+	 *     </tr>
+	 *     <tr>
 	 *         <td>title</td>
 	 *         <td>The title of the Program</td>
 	 *         <td>Required</td>
@@ -57,8 +63,8 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	 *         <td>Defaults to {@code title} (with spaces removed) .jar</td>
 	 *     </tr>
 	 *     <tr>
-	 *         <td>libJarNames</td>
-	 *         <td>The names of the library jar files the Program uses</td>
+	 *         <td>libraries</td>
+	 *         <td>A List of {@link ShortInfo}s for libraries the Program uses</td>
 	 *         <td>Defaults to an empty list</td>
 	 *     </tr>
 	 *     <tr>
@@ -72,19 +78,30 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	 * @version Alpha v.0.1
 	 */
 	public static class ProgramInfoBuilder{
+		/** The {@link EasyLogger} to use for logging */
+		private EasyLogger logger = null;
 		/** The Title of the Program */
 		private String title;
 		/** The Description of the Program */
 		private String description;
 		/** The name for the Program's jar file */
 		private String programJarName = null;
-		/** The names of the library jar files the Program uses */
-		private JSONArrayList<String> libJarNames = new JSONArrayList<>();
+		/** The {@link ShortInfo}s of the libraries the Program uses */
+		private JSONArrayList<ShortInfo> libraries = new JSONArrayList<>();
 		/** The {@link ProgramHandler} to be used */
 		private ProgramHandler programHandler = null;
 		
-		// Not allowed to create a ProgramInfoBuilder outside of ProgramInfo
+		/** Not allowed to create a ProgramInfoBuilder outside ProgramInfo */
 		private ProgramInfoBuilder(){ }
+		
+		/**
+		 * @param logger The {@link EasyLogger} to use for logging if needed
+		 * @return this, to continue building
+		 */
+		public ProgramInfoBuilder logger(EasyLogger logger){
+			this.logger = logger;
+			return this;
+		}
 		
 		/**
 		 * @param title The Title of the Program
@@ -114,29 +131,43 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 		}
 		
 		/**
-		 * @param libJarNames The names of the library jar files the Program uses
+		 * @param libraries The {@link ShortInfo}s of the libraries the Program uses
 		 * @return this, to continue building
 		 */
-		public ProgramInfoBuilder libJarNames(JSONArrayList<String> libJarNames){
-			this.libJarNames = libJarNames;
+		public ProgramInfoBuilder libraries(JSONArrayList<ShortInfo> libraries){
+			this.libraries = libraries;
 			return this;
 		}
 		
 		/**
-		 * @param libJarNames The names of the library jar files the Program uses
+		 * @param libraries The {@link ShortInfo}s of the libraries the Program uses
 		 * @return this, to continue building
 		 */
-		public ProgramInfoBuilder libJarNames(List<String> libJarNames){
-			this.libJarNames = new JSONArrayList<>(libJarNames);
+		public ProgramInfoBuilder libraries(List<ShortInfo> libraries){
+			this.libraries = new JSONArrayList<>(libraries);
 			return this;
 		}
 		
 		/**
-		 * @param libJarName The name of a library jar file the Program uses (to be added to the list)
+		 * @param library The {@link ShortInfo} of a library the Program uses (to be added to the list)
 		 * @return this, to continue building
 		 */
-		public ProgramInfoBuilder libJarName(String libJarName){
-			libJarNames.add(libJarName);
+		public ProgramInfoBuilder library(ShortInfo library){
+			libraries.add(library);
+			return this;
+		}
+		
+		/**
+		 * Creates a new Library {@link ShortInfo} for a library the Program uses and adds it to the
+		 * list of libraries
+		 *
+		 * @param title The title of the library
+		 * @param filename The filename of the library
+		 * @param fileLocation The location of the file for the library (to be downloaded from)
+		 * @return this, to continue building
+		 */
+		public ProgramInfoBuilder library(String title, String filename, String fileLocation){
+			libraries.add(new ShortInfo(InfoType.LIB, title, filename, fileLocation));
 			return this;
 		}
 		
@@ -191,38 +222,42 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 			}
 			
 			// Build the ProgramInfo
-			return new ProgramInfo(title, description,
-					programJarName, libJarNames,
+			return new ProgramInfo(logger, title, description,
+					programJarName, libraries,
 					programHandler);
 		}
 	}
 	
+	/** Key used for the {@link EasyLogger} */
+	private static final String LOGGER = "logger";
 	/** Key used for the Title of the Program */
 	private static final String TITLE = "title";
 	/** Key used for the Description of the Program */
 	private static final String DESCRIPTION = "description";
 	/** Key used for the Program Jar Name of the Program */
 	private static final String PROGRAM_JAR_NAME = "program-jar-name";
-	/** Key used for the Library Jar Names of the Program */
-	private static final String LIB_JAR_NAMES = "library-jar-names";
+	/** Key used for the Library {@link ShortInfo}s of the Program */
+	private static final String LIBRARIES = "libraries";
 	/** Key used for the {@link ProgramHandler} to be used */
 	public static final String PROGRAM_HANDLER = "Program Handler";
 	
 	/**
 	 * Creates a new ProgramInfo programmatically with the given information.
 	 *
+	 * @param logger An {@link EasyLogger} to use for logging if needed
 	 * @param title The title of the Program
 	 * @param description The description for the Program
 	 * @param programJarName The name for the Program's jar file
-	 * @param libJarNames The names of the library jar files the Program uses
+	 * @param libraries The {@link ShortInfo}s of the libraries the Program uses
 	 * @param programHandler The {@link ProgramHandler} to be used
 	 * @throws Throwable If anything goes wrong
 	 */
-	private ProgramInfo(String title, String description,
-	                    String programJarName, JSONArrayList<String> libJarNames,
-	                    ProgramHandler programHandler) throws Throwable{
-		super(MapUtil.createMap(Pair.of(TITLE, title), Pair.of(DESCRIPTION, description),
-				Pair.of(PROGRAM_JAR_NAME, programJarName), Pair.of(LIB_JAR_NAMES, libJarNames),
+	private ProgramInfo(
+			EasyLogger logger, String title, String description,
+			String programJarName, JSONArrayList<ShortInfo> libraries,
+			ProgramHandler programHandler) throws Throwable{
+		super(MapUtil.createMap(Pair.of(LOGGER, logger), Pair.of(TITLE, title), Pair.of(DESCRIPTION, description),
+				Pair.of(PROGRAM_JAR_NAME, programJarName), Pair.of(LIBRARIES, libraries),
 				Pair.of(PROGRAM_HANDLER, programHandler)));
 	}
 	
@@ -247,7 +282,7 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	/** {@inheritDoc} */
 	@Override
 	public List<String> getKeyOrder(){
-		return ListUtil.createList(TITLE, DESCRIPTION, PROGRAM_JAR_NAME, LIB_JAR_NAMES);
+		return ListUtil.createList(TITLE, DESCRIPTION, PROGRAM_JAR_NAME, LIBRARIES);
 	}
 	
 	/** {@inheritDoc} */
@@ -285,6 +320,22 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	}
 	
 	/**
+	 * @return The {@link EasyLogger} to use for logging if needed
+	 */
+	public EasyLogger getLogger(){
+		return (EasyLogger) getItem(LOGGER);
+	}
+	
+	/**
+	 * Sets the {@link EasyLogger} to use for logging
+	 *
+	 * @param logger The {@link EasyLogger} to use for logging
+	 */
+	public void setLogger(EasyLogger logger){
+		setItem(LOGGER, logger);
+	}
+	
+	/**
 	 * @return The Title of this Program
 	 */
 	public String getTitle(){
@@ -306,10 +357,9 @@ public class ProgramInfo extends AbstractSimpleForm implements OrderedJSONClass{
 	}
 	
 	/**
-	 * @return The names of the library jar files the Program uses
+	 * @return The {@link ShortInfo}s of the libraries the Program uses
 	 */
-	@SuppressWarnings("unchecked")
-	public List<String> getLibJarNames(){
-		return (JSONArrayList<String>) getItem(LIB_JAR_NAMES);
+	public List<ShortInfo> getLibraries(){
+		return getJSONArrayItemNoThrow(getLogger(), LIBRARIES, ShortInfo.class);
 	}
 }
